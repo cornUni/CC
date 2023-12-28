@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  flask-app:
+      build:
+        context: ./
+      image: pyw
+      container_name: py_w
+      ports:
+        - "8080:8080" 
+      networks:
+        - weather_network
+      depends_on:
+        - redis
+      environment:
+        - API_KEY=5fadda87e2msh91fbec44114e41dp147ddejsn949782727d43
+        - EXPIRATION_TIME=300
+        - PORT=8080
+        - CITY=paris
+  
+  
+  redis:
+    image: redis:4.0
+    container_name: redis_w
+    ports:
+        - "6379:6379" 
+    networks:
+      - weather_network
+    volumes:
+      - redis-data:/data  
+
+  
+
+volumes:
+  redis-data: 
+
+networks:
+  weather_network:
